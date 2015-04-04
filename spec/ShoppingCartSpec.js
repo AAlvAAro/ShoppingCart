@@ -60,8 +60,7 @@ describe("ShoppingCart", function() {
 
   it("should calculate the price after a client discount and taxes", function() {
     var priceWithDiscount;
-    cart._options.taxRate = 16;
-    cart._options.clientDiscount = 5;
+    addDiscountAndTaxes();
     addTwoItems();
     priceWithDiscount = cart.getTotal() * getPercentaje(cart._options.clientDiscount, "clientDiscount");
     expect(cart.netTotal()).toEqual(priceWithDiscount * getPercentaje(cart._options.taxRate, "taxRate"));
@@ -70,18 +69,34 @@ describe("ShoppingCart", function() {
   it("should get the total ammount of taxes to pay", function() {
     cart._options.taxRate = 16;
     addTwoItems();
-    expect(cart.getTaxes()).toEqual(cart.getTotal() * cart._options.taxRate); 
+    expect(cart.getTaxes()).toEqual(cart.getTotal() * cart._options.taxRate / 100); 
   });
 
   it("should get the total ammount for a client discount", function() {
     cart._options.clientDiscount = 10;
     addTwoItems();
-    expect(cart.getTotalDiscount()).toEqual(cart.getTotal() * cart._options.clientDiscount); 
+    expect(cart.getTotalDiscount()).toEqual(cart.getTotal() * cart._options.clientDiscount / 100); 
   });
-
+  
+  /*
+  it("should equal the total ammount to the net ammount + discount + taxes", function() {
+    // Due to percentaje calculations it won't be the exact same ammount but we expect to
+    // get a difference lower than .10 which would not affect the transaction's balance
+    var totalSum = cart.netTotal() + cart.getTotalDiscount() + cart.getTaxes(); 
+    addDiscountAndTaxes();
+    addTwoItems();
+    expect((cart.getTotal() - totalSum) < 0.1).toBeTruthy();
+  }); */
+  
+  // Tests' helper functions
   function addTwoItems() {
     cart.addItem(item);
     cart.addItem(item2);
+  }
+
+  function addDiscountAndTaxes() {
+    cart._options.taxRate = 16;
+    cart._options.clientDiscount = 5;
   }
 
   function getPercentaje(percentaje, type) {
