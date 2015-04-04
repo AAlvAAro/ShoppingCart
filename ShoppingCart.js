@@ -2,7 +2,7 @@
 
 var ShoppingCart = (function() {
   function ShoppingCart(customOptions) {
-    var self = this;
+    var self = this,
         total = 0,
         items = [],
 
@@ -35,20 +35,20 @@ var ShoppingCart = (function() {
     }
 
     self.netTotal = function() {
-      var hasTax = this._options.taxRate > 0,
-          hasDiscount = this._options.clientDiscount > 0;
+      var hasTax = self._options.taxRate > 0,
+          hasDiscount = self._options.clientDiscount > 0;
       if(hasDiscount && hasTax) {
-        var discountedTotal  = total * (1 - (this._options.clientDiscount / 100));
-        return discountedTotal * (1 - (this._options.taxRate / 100)); 
+        var discountedTotal  = total * (1 - (self._options.clientDiscount / 100));
+        return discountedTotal * (1 - (self._options.taxRate / 100)); 
       } else if(hasDiscount && !hasTax) {
-        return total * (1 - (this._options.clientDiscount / 100)); 
+        return total * (1 - (self._options.clientDiscount / 100)); 
       } else {
-        return total * (1 - (this._options.taxRate / 100)); 
+        return total * (1 - (self._options.taxRate / 100)); 
       }
     }
 
     self.addCustomDiscount = function(discount) {
-      this._options.clientDiscount = discount; 
+      self._options.clientDiscount = discount; 
     }
   };
   return ShoppingCart;
