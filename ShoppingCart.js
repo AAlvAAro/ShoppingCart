@@ -54,6 +54,10 @@ var ShoppingCart = (function() {
     self.getTaxes = function() {
       return total * self._options.taxRate;
     }
+
+    self.getTotalDiscount = function() {
+      return total * self._options.clientDiscount; 
+    }
   };
   return ShoppingCart;
 })();

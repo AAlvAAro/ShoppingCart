@@ -73,6 +73,12 @@ describe("ShoppingCart", function() {
     expect(cart.getTaxes()).toEqual(cart.getTotal() * cart._options.taxRate); 
   });
 
+  it("should get the total ammount for a client discount", function() {
+    cart._options.clientDiscount = 10;
+    addTwoItems();
+    expect(cart.getTotalDiscount()).toEqual(cart.getTotal() * cart._options.clientDiscount); 
+  });
+
   function addTwoItems() {
     cart.addItem(item);
     cart.addItem(item2);
