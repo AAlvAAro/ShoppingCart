@@ -50,6 +50,10 @@ var ShoppingCart = (function() {
     self.addCustomDiscount = function(discount) {
       self._options.clientDiscount = discount; 
     }
+
+    self.getTaxes = function() {
+      return total * self._options.taxRate;
+    }
   };
   return ShoppingCart;
 })();

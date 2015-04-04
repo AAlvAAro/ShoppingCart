@@ -67,6 +67,12 @@ describe("ShoppingCart", function() {
     expect(cart.netTotal()).toEqual(priceWithDiscount * getPercentaje(cart._options.taxRate, "taxRate"));
   });
 
+  it("should get the total ammount of taxes to pay", function() {
+    cart._options.taxRate = 16;
+    addTwoItems();
+    expect(cart.getTaxes()).toEqual(cart.getTotal() * cart._options.taxRate); 
+  });
+
   function addTwoItems() {
     cart.addItem(item);
     cart.addItem(item2);
