@@ -1,7 +1,16 @@
 var ShoppingCart = (function() {
-  function ShoppingCart() {
+  function ShoppingCart(custosmOptions) {
     var total = 0,
-        items = [];
+        items = [],
+        customOptions,
+
+        defaultOptions = {
+          taxRate: 0,
+          clientDiscount: null,
+          shippingCost: null
+        };
+        
+    this._options = customOptions ? customOptions : defaultOptions;
     
 
     this.getItems = function() {
@@ -21,6 +30,14 @@ var ShoppingCart = (function() {
 
     this.getTotal = function() {
       return total;
+    }
+
+    this.netTotal = function() {
+      return total * (1 - (this._options.taxRate / 100)); 
+    }
+
+    this.addCustomDiscount = function(discount) {
+      this._options.clientDiscount = discount; 
     }
   };
   return ShoppingCart;

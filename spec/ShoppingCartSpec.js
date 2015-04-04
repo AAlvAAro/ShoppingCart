@@ -3,7 +3,11 @@ describe("ShoppingCart", function() {
   var cart, invalidItem, item, item2;
 
   beforeEach(function() {
-    cart = new ShoppingCart();    
+    cart = new ShoppingCart({});    
+    cartWithTaxes = new ShoppingCart({
+      taxRate: 16,
+      clientDiscount: 5
+    });
     invalidItem = "MacBook Pro";
 
     item = {
@@ -38,11 +42,38 @@ describe("ShoppingCart", function() {
   });
 
   it("should return the total of the purchase", function() {
-    cart.addItem(item);
-    expect(cart.getTotal()).toEqual(1200);
-    cart.addItem(item2);
+    addTwoItems();
     expect(cart.getTotal()).toEqual(1350);
   });
 
+  it("should calculate the price before and after taxes", function() {
+    addTwoItems();
+    expect(cart.netTotal()).toEqual(cart.getTotal() * 
+      getMinusPercentaje(cart._options.taxRate, "taxRate")); 
+  });
+
+  it("should be able to add a general discount, and calculate the total", function() {
+    cart.addCustomDiscount(); 
+    addTwoItems();
+    expect(cart.netTotal()).toEqual(cart.getTotal() * getMinusPercentaje(
+      [cart._options.taxRate, cart._options.clientDiscount]
+    )); 
+  });
+
+  function addTwoItems() {
+    cart.addItem(item);
+    cart.addItem(item2);
+  }
+
+  function getMinusPercentaje(percentajes, type) {
+    if(typeof percentajes === "array") {
+      var total;
+      percentajes.forEach(function(percentaje) {
+        total += percentaje; 
+      });
+      return 1 - (total / 100);
+    }
     
+    return 1 - (cart._options[type] / 100); 
+  }
 });
