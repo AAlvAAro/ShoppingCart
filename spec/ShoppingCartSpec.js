@@ -63,7 +63,7 @@ describe("ShoppingCart", function() {
     cart._options.taxRate = 16;
     cart._options.clientDiscount = 5;
     addTwoItems();
-    priceWithDiscount = cart.netTotal() * getPercentaje(cart._options.clientDiscount, "clientDiscount");
+    priceWithDiscount = cart.getTotal() * getPercentaje(cart._options.clientDiscount, "clientDiscount");
     expect(cart.netTotal()).toEqual(priceWithDiscount * getPercentaje(cart._options.taxRate, "taxRate"));
   });
 
