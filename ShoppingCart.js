@@ -1,47 +1,53 @@
+'use_strict';
+
 var ShoppingCart = (function() {
   function ShoppingCart(customOptions) {
-    var total = 0,
+    var self = this;
+        total = 0,
         items = [],
 
         defaultOptions = {
           taxRate: 0,
-          clientDiscount: null,
+          clientDiscount: 0,
           shippingCost: null
         };
         
-    this._options = customOptions || defaultOptions;
+    self._options = customOptions || defaultOptions;
     
 
-    this.getItems = function() {
+    self.getItems = function() {
       return items; 
     }
 
-    this.addItem = function(item) {
+    self.addItem = function(item) {
       if(typeof item === "object") {
         items.push(item);
         total += item.price;
       }
     }
     
-    this.removeItem = function(item) {
+    self.removeItem = function(item) {
       items.splice(item, 1); 
     }
 
-    this.getTotal = function() {
+    self.getTotal = function() {
       return total;
     }
 
-    this.netTotal = function() {
-      var haveTax = this._options.taxRate > 0,
-          haveDiscount = this._options.clientDiscount > 0;
-      if(haveTax) {
-        return total * (1 - (this._options.taxRate / 100)); 
-      } else if(haveDiscount) {
+    self.netTotal = function() {
+      var hasTax = this._options.taxRate > 0,
+          hasDiscount = this._options.clientDiscount > 0;
+      if(hasDiscount && hasTax) {
+        var discountedTotal  = total * (1 - (this._options.clientDiscount / 100));
+        return discountedTotal * (1 - (this._options.taxRate / 100)); 
+      } else if(hasDiscount && !hasTax) {
         return total * (1 - (this._options.clientDiscount / 100)); 
+      } else {
+        return total * (1 - (this._options.taxRate / 100)); 
       }
     }
 
-    this.addCustomDiscount = function(discount) {
+    self.addCustomDiscount = function(discount) {
       this._options.clientDiscount = discount; 
     }
   };

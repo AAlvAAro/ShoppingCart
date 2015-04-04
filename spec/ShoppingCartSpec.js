@@ -1,3 +1,5 @@
+'use_strict';
+
 describe("ShoppingCart", function() {
   var ShoppingCart = require("../ShoppingCart.js");
   var cart, invalidItem, item, item2;
@@ -57,8 +59,12 @@ describe("ShoppingCart", function() {
   });
 
   it("should calculate the price after a client discount and taxes", function() {
+    var priceWithDiscount;
     cart._options.taxRate = 16;
     cart._options.clientDiscount = 5;
+    addTwoItems();
+    priceWithDiscount = cart.netTotal() * getPercentaje(cart._options.clientDiscount, "clientDiscount");
+    expect(cart.netTotal()).toEqual(priceWithDiscount * getPercentaje(cart._options.taxRate, "taxRate"));
   });
 
   function addTwoItems() {
