@@ -78,16 +78,6 @@ describe("ShoppingCart", function() {
     expect(cart.getTotalDiscount()).toEqual(cart.getTotal() * cart._options.clientDiscount / 100); 
   });
   
-  /*
-  it("should equal the total ammount to the net ammount + discount + taxes", function() {
-    // Due to percentaje calculations it won't be the exact same ammount but we expect to
-    // get a difference lower than .10 which would not affect the transaction's balance
-    var totalSum = cart.netTotal() + cart.getTotalDiscount() + cart.getTaxes(); 
-    addDiscountAndTaxes();
-    addTwoItems();
-    expect((cart.getTotal() - totalSum) < 0.1).toBeTruthy();
-  }); */
-  
   // Tests' helper functions
   function addTwoItems() {
     cart.addItem(item);
