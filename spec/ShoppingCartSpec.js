@@ -4,10 +4,6 @@ describe("ShoppingCart", function() {
 
   beforeEach(function() {
     cart = new ShoppingCart({});    
-    cartWithTaxes = new ShoppingCart({
-      taxRate: 16,
-      clientDiscount: 5
-    });
     invalidItem = "MacBook Pro";
 
     item = {
@@ -47,17 +43,22 @@ describe("ShoppingCart", function() {
   });
 
   it("should calculate the price before and after taxes", function() {
+    cart._options.taxRate = 16;
     addTwoItems();
     expect(cart.netTotal()).toEqual(cart.getTotal() * 
-      getMinusPercentaje(cart._options.taxRate, "taxRate")); 
+      getPercentaje(cart._options.taxRate, "taxRate")); 
   });
 
-  it("should be able to add a general discount, and calculate the total", function() {
-    cart.addCustomDiscount(); 
+  it("should calculate the price after a client discount", function() {
+    cart._options.clientDiscount = 5;
     addTwoItems();
-    expect(cart.netTotal()).toEqual(cart.getTotal() * getMinusPercentaje(
-      [cart._options.taxRate, cart._options.clientDiscount]
-    )); 
+    expect(cart.netTotal()).toEqual(cart.getTotal() * 
+      getPercentaje(cart._options.clientDiscount, "clientDiscount")); 
+  });
+
+  it("should calculate the price after a client discount and taxes", function() {
+    cart._options.taxRate = 16;
+    cart._options.clientDiscount = 5;
   });
 
   function addTwoItems() {
@@ -65,15 +66,7 @@ describe("ShoppingCart", function() {
     cart.addItem(item2);
   }
 
-  function getMinusPercentaje(percentajes, type) {
-    if(typeof percentajes === "array") {
-      var total;
-      percentajes.forEach(function(percentaje) {
-        total += percentaje; 
-      });
-      return 1 - (total / 100);
-    }
-    
+  function getPercentaje(percentaje, type) {
     return 1 - (cart._options[type] / 100); 
   }
 });

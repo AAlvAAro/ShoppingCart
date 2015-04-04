@@ -1,8 +1,7 @@
 var ShoppingCart = (function() {
-  function ShoppingCart(custosmOptions) {
+  function ShoppingCart(customOptions) {
     var total = 0,
         items = [],
-        customOptions,
 
         defaultOptions = {
           taxRate: 0,
@@ -10,7 +9,7 @@ var ShoppingCart = (function() {
           shippingCost: null
         };
         
-    this._options = customOptions ? customOptions : defaultOptions;
+    this._options = customOptions || defaultOptions;
     
 
     this.getItems = function() {
@@ -33,7 +32,13 @@ var ShoppingCart = (function() {
     }
 
     this.netTotal = function() {
-      return total * (1 - (this._options.taxRate / 100)); 
+      var haveTax = this._options.taxRate > 0,
+          haveDiscount = this._options.clientDiscount > 0;
+      if(haveTax) {
+        return total * (1 - (this._options.taxRate / 100)); 
+      } else if(haveDiscount) {
+        return total * (1 - (this._options.clientDiscount / 100)); 
+      }
     }
 
     this.addCustomDiscount = function(discount) {
