@@ -1,0 +1,17 @@
+{
+  "name": "ShoppingCart",
+  "version": "0.0.1",
+  "author": "Alvaro Delgado <aadelgado@fevaq.net>",
+  "description": "JavaScript ShoppingCart",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AAlvAAro/ShoppingCart"
+  },
+  "keywords": [],
+  "dependencies": {},
+  "devDependencies": {
+    "grunt-cli": "^0.1.13",
+    "jasmine": "^2.2.1"
+  },
+  "licence": "MIT"
+}
