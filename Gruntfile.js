@@ -8,16 +8,23 @@ module.exports = function(grunt) {
         }
       }          
     },
+    concat: {
+      dist: {
+        src: ['src/ShoppingCart.js', 'src/ShoppingCartUI.js'], 
+        dest: 'src/dist/shopping-cart.js'
+      }    
+    },
     uglify: {
       dist: {
         files: {
-          'src/dist/shopping-cart.min.js': ['src/*.js']
+          'src/dist/shopping-cart.min.js': ['src/dist/shopping-cart.js']
         }       
       }
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jasmine');
-  grunt.registerTask('default', ['jasmine', 'uglify']);
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.registerTask('default', ['jasmine', 'concat', 'uglify']);
 };
