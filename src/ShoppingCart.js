@@ -6,6 +6,16 @@ var ShoppingCart = (function() {
         total = 0,
         items = [],
 
+        // Set the initial options for taxing and shipping according to the 
+        // business' needs. Create an object customOptions with the properties:
+        //    * taxRate
+        //    * clientDiscount
+        //    * shoppingCost
+        // The clientDiscount should be passed as 0 and can be modified whenever
+        // a particular client has a preferent price discount.
+        // If customOptions is not declared the cart's options will be set to the
+        // default ones.
+        
         defaultOptions = {
           taxRate: 0,
           clientDiscount: 0,
@@ -17,7 +27,7 @@ var ShoppingCart = (function() {
     self.addCustomDiscount = function(discount) {
       self._options.clientDiscount = discount; 
     }
-    
+
 
     self.getItems = function() {
       return items; 
@@ -46,6 +56,7 @@ var ShoppingCart = (function() {
       return total * self._options.clientDiscount / 100; 
     }
 
+    // Get the Purchase's Total after client discount and taxes if they exist
     self.netTotal = function() {
       var hasTax = self._options.taxRate > 0,
           hasDiscount = self._options.clientDiscount > 0;
