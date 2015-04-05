@@ -10,7 +10,8 @@
   "keywords": [],
   "dependencies": {},
   "devDependencies": {
-    "grunt-cli": "^0.1.13",
+    "grunt": "^0.4.5",
+    "grunt-contrib-uglify": "^0.8.1",
     "jasmine": "^2.2.1"
   },
   "licence": "MIT"
