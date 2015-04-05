@@ -1,14 +1,23 @@
 module.exports = function(grunt) {  
   grunt.initConfig({
+    jasmine: {
+      pivotal: {
+        src: 'src/*.js',
+        options: {
+          specs: 'src/spec/*Spec.js'
+        }
+      }          
+    },
     uglify: {
       dist: {
         files: {
-          'dist/shopping-cart.min.js': ['src/ShoppingCart.js']
+          'src/dist/shopping-cart.min.js': ['src/*.js']
         }       
       }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.registerTask('default', ['uglify']);
+  grunt.loadNpmTasks('grunt-contrib-jasmine');
+  grunt.registerTask('default', ['jasmine', 'uglify']);
 };

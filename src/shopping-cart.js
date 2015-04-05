@@ -63,4 +63,4 @@ var ShoppingCart = (function() {
   return ShoppingCart;
 })();
 
-module.exports = ShoppingCart;
+//module.exports = ShoppingCart;
