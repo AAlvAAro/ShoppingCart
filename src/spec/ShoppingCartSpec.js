@@ -1,7 +1,6 @@
 'use_strict';
 
 describe("ShoppingCart", function() {
-  //var ShoppingCart = require("../ShoppingCart.js");
   var cart, invalidItem, item, item2;
 
   beforeEach(function() {
